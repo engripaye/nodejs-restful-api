@@ -1,0 +1,24 @@
+version: "3.8" # Update to a supported version
+
+services:
+  app:
+    build: .
+    container_name: nodejs-restful-api-app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: "mongodb://mongo:27017/productsDB"
+
+  mongo:
+    image: mongo:latest
+    container_name: nodejs-restful-api-db
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
